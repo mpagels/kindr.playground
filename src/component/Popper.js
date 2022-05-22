@@ -4,7 +4,7 @@ import mojs from "@mojs/core";
 const Popper = () => {
   const animDom = useRef();
   const bouncyCircle = useRef();
-  const [isOpen, setIsOpen] = useState(false);
+
   const [hasClicked, setHasClicked] = useState(false);
 
   useEffect(() => {
@@ -43,7 +43,6 @@ const Popper = () => {
 
     // Play the animation on start, and set the state to open
     bouncyCircle.current.play();
-    setIsOpen(true);
   });
 
   useEffect(() => {
@@ -84,8 +83,8 @@ const Popper = () => {
 
     setTimeout(() => {
       setHasClicked(true);
-    }, 1000);
-  }, [isOpen]);
+    }, 700);
+  }, []);
 
   return (
     <div ref={animDom} className="MojsExample" onClick={clickHandler}>
