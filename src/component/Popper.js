@@ -11,7 +11,6 @@ const Popper = () => {
     // Prevent multiple instansiations on hot reloads
     if (bouncyCircle.current) return;
 
-    // Assign a Shape animation to a ref
     const [top, left] = getTopLeft();
 
     bouncyCircle.current = new mojs.Shape({
@@ -26,7 +25,6 @@ const Popper = () => {
       easing: "elastic.inout",
     });
 
-    // Play the animation on start, and set the state to open
     bouncyCircle.current.play();
   });
 
@@ -46,8 +44,6 @@ const Popper = () => {
   }, [hasClicked]);
 
   const clickHandler = useCallback(() => {
-    // If the circel is "open", play the animation backwards, else play it forwards
-
     bouncyCircle.current.playBackward();
 
     setTimeout(() => {
