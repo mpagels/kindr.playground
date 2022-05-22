@@ -1,5 +1,7 @@
+import TouchBurst from "./component/TouchBurst";
+
 function App() {
-  return <div>Hello World</div>;
+  return <TouchBurst />;
 }
 
 export default App;
