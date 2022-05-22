@@ -1,10 +1,13 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import mojs from "@mojs/core";
 
+const COLORS = ["deeppink", "cyan", "yellow", "orangered"];
+
 const Popper = () => {
   const animDom = useRef();
   const bouncyCircle = useRef();
 
+  const lastColor = useRef();
   const [hasClicked, setHasClicked] = useState(false);
 
   useEffect(() => {
@@ -12,11 +15,11 @@ const Popper = () => {
     if (bouncyCircle.current) return;
 
     const [top, left] = getTopLeft();
-
+    const color = getRandomColor();
     bouncyCircle.current = new mojs.Shape({
       parent: animDom.current,
       shape: "rect",
-      fill: { "#FC46AD": "#F64040" },
+      fill: [color],
       radius: { 0: 150 },
       top,
       left,
@@ -31,11 +34,12 @@ const Popper = () => {
   useEffect(() => {
     if (hasClicked) {
       const [top, left] = getTopLeft();
-
+      const color = getRandomColor();
       bouncyCircle.current
         .tune({
           top,
           left,
+          fill: [color],
         })
         .replay();
     }
@@ -79,6 +83,18 @@ const Popper = () => {
     }
 
     return [top, left];
+  }
+
+  function getRandomColor() {
+    const colors = COLORS.filter((color) => {
+      if (lastColor.current) {
+        return color !== lastColor.current;
+      }
+      return true;
+    });
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    lastColor.current = color;
+    return color;
   }
 };
 
