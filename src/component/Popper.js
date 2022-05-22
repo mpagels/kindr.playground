@@ -12,23 +12,8 @@ const Popper = () => {
     if (bouncyCircle.current) return;
 
     // Assign a Shape animation to a ref
-    const { innerWidth: width, innerHeight: height } = window;
-    const generatedTop = Math.random() * height;
-    const generatedLeft = Math.random() * width;
-    let top = generatedTop;
-    let left = generatedLeft;
+    const [top, left] = getTopLeft();
 
-    if (generatedTop < 150) {
-      top = 150;
-    } else if (generatedTop > height - 150) {
-      top = height - 150;
-    }
-
-    if (generatedLeft < 150) {
-      left = 150;
-    } else if (generatedLeft > width - 150) {
-      left = width - 150;
-    }
     bouncyCircle.current = new mojs.Shape({
       parent: animDom.current,
       shape: "rect",
@@ -47,23 +32,7 @@ const Popper = () => {
 
   useEffect(() => {
     if (hasClicked) {
-      const { innerWidth: width, innerHeight: height } = window;
-      const generatedTop = Math.random() * height;
-      const generatedLeft = Math.random() * width;
-      let top = generatedTop;
-      let left = generatedLeft;
-
-      if (generatedTop < 150) {
-        top = 150;
-      } else if (generatedTop > height - 150) {
-        top = height - 150;
-      }
-
-      if (generatedLeft < 150) {
-        left = 150;
-      } else if (generatedLeft > width - 150) {
-        left = width - 150;
-      }
+      const [top, left] = getTopLeft();
 
       bouncyCircle.current
         .tune({
@@ -91,6 +60,30 @@ const Popper = () => {
       <div className="content"></div>
     </div>
   );
+
+  // helper function
+
+  function getTopLeft() {
+    const { innerWidth: width, innerHeight: height } = window;
+    const generatedTop = Math.random() * height;
+    const generatedLeft = Math.random() * width;
+    let top = generatedTop;
+    let left = generatedLeft;
+
+    if (generatedTop < 150) {
+      top = 150;
+    } else if (generatedTop > height - 150) {
+      top = height - 150;
+    }
+
+    if (generatedLeft < 150) {
+      left = 150;
+    } else if (generatedLeft > width - 150) {
+      left = width - 150;
+    }
+
+    return [top, left];
+  }
 };
 
 export default Popper;
