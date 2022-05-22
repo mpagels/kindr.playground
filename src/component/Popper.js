@@ -5,14 +5,11 @@ const Popper = () => {
   const animDom = useRef();
   const bouncyCircle = useRef();
   const [isOpen, setIsOpen] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
 
   useEffect(() => {
     // Prevent multiple instansiations on hot reloads
-    if (bouncyCircle.current && isOpen) return;
-
-    if (bouncyCircle.current) {
-      bouncyCircle.current = null;
-    }
+    if (bouncyCircle.current) return;
 
     // Assign a Shape animation to a ref
     const { innerWidth: width, innerHeight: height } = window;
@@ -48,10 +45,46 @@ const Popper = () => {
     bouncyCircle.current.play();
     setIsOpen(true);
   });
+
+  useEffect(() => {
+    if (hasClicked) {
+      const { innerWidth: width, innerHeight: height } = window;
+      const generatedTop = Math.random() * height;
+      const generatedLeft = Math.random() * width;
+      let top = generatedTop;
+      let left = generatedLeft;
+
+      if (generatedTop < 150) {
+        top = 150;
+      } else if (generatedTop > height - 150) {
+        top = height - 150;
+      }
+
+      if (generatedLeft < 150) {
+        left = 150;
+      } else if (generatedLeft > width - 150) {
+        left = width - 150;
+      }
+
+      bouncyCircle.current
+        .tune({
+          top,
+          left,
+        })
+        .replay();
+    }
+
+    setHasClicked(false);
+  }, [hasClicked]);
+
   const clickHandler = useCallback(() => {
     // If the circel is "open", play the animation backwards, else play it forwards
-    isOpen ? bouncyCircle.current.playBackward() : bouncyCircle.current.play();
-    setIsOpen(!isOpen);
+
+    bouncyCircle.current.playBackward();
+
+    setTimeout(() => {
+      setHasClicked(true);
+    }, 1000);
   }, [isOpen]);
 
   return (
