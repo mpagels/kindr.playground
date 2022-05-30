@@ -2,11 +2,18 @@
 
 This repo contains little games for motoric learning for babies.
 
-## Games (1)
+## Games (2)
 
 - TouchBurst:
+
   - touch the screen
   - at touch point 5 balls appears and moving smaller
+
+- Popper:
+  - a square appears
+  - touch it
+  - it disappers
+  - repeat()
 
 ### Available Scripts
 
